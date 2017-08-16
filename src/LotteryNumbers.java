@@ -4,7 +4,7 @@ import java.util.Set;
 public class LotteryNumbers {
 
 	public static void main(String[] args) {
-		String s1 = "4938532894754";
+		String s1 = "4938";
 		Set<Set<String>> all = new HashSet<>();
 		getlotteryNumbers(s1, all);
 		for (Set<String> s : all) {
@@ -20,8 +20,8 @@ public class LotteryNumbers {
 		startFirst.addAll(all);
 		if (all.isEmpty()) {
 			Set<String> start = new HashSet<>();
-			start.add(allNumbers.substring(0, 1));
-			all.add(start);
+			start.add("");
+			startFirst.add(start);
 		}
 		for (Set<String> s : startFirst) {
 			s.add(allNumbers.substring(0, 1));
