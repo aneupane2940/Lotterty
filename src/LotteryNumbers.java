@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class LotteryNumbers {
@@ -6,15 +7,23 @@ public class LotteryNumbers {
 	public static void main(String[] args) {
 		String s1 = "4938";
 		Set<Set<String>> all = new HashSet<>();
-		getlotteryNumbers(s1, all);
+		all.add(new HashSet<>());
+		all=getlotteryNumbers(s1, all);
 		for (Set<String> s : all) {
 			System.out.println(s);
 		}
 	}
 
-	private static void getlotteryNumbers(String allNumbers, Set<Set<String>> all) {
+	private static Set<Set<String>> getlotteryNumbers(String allNumbers, Set<Set<String>> all) {
+
+		Set<Set<String>> allnew = new HashSet<>();
+		for (Set<String> s : all) {
+			if (s.size() == 2) {
+				allnew.add(s);
+			}
+		}
 		if (allNumbers.length() == 0) {
-			return;
+			return all;
 		}
 		Set<Set<String>> startFirst = new HashSet<>();
 		startFirst.addAll(all);
@@ -35,5 +44,6 @@ public class LotteryNumbers {
 			}
 			getlotteryNumbers(allNumbers.substring(2, allNumbers.length()), secondSet);
 		}
+		return allnew;
 	}
 }
