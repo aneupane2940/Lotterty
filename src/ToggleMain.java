@@ -1,60 +1,67 @@
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class ToggleMain {
 	public static void main(String[] args) {
 		String s1 = "1234";
 		Set<Set<String>> all = new HashSet<>();
-		Set<Set<String>> smallAll = new HashSet<>();
+		List<Set<String>> smallAll = new ArrayList<>();
 
 		all.add(new HashSet<>());
-		getlotteryNumbers(s1,smallAll, all);
+		getlotteryNumbers(s1, smallAll);
 		for (Set<String> s : smallAll) {
-			if(s.size() ==2){
-				System.out.println(s);
-			}
+			// if (s.size() == 2) {
+			System.out.println(s);
+			// }
 		}
 	}
 
-	private static void getlotteryNumbers(String allNumbers,
-			Set<Set<String>> smallAll,	Set<Set<String>> all) {
+	private static void getlotteryNumbers(String allNumbers, List<Set<String>> smallAll) {
 
-		if(!all.isEmpty()){
-			smallAll.addAll(all);
-		}else{ 
-			Set<String> start = new HashSet<>();
-			start.add(allNumbers.substring(0, 1));
-			all.add(start);
-		}
-		Set<Set<String>> allnew = new HashSet<>();
-		for (Set<String> s : all) {
-			if (s.size() == 2) {
-				allnew.add(s);
-			}
-		}
 		if (allNumbers.length() == 0) {
 			return;
 		}
-		Set<Set<String>> startFirst = new HashSet<>();
-		startFirst.addAll(all);
+		List<Set<String>> smallAllFin = new ArrayList<>();
 
-		for (Set<String> s : all) {
-			Set<String> small = new HashSet<>();
-			small.addAll(s);
-			small.add(allNumbers.substring(0, 1));
-			startFirst.add(small);
+		for (Set<String> s : smallAll) {
+			Set<String> delta = new HashSet<>();
+			delta.addAll(s);
+			smallAllFin.add(delta);
 		}
-		getlotteryNumbers(allNumbers.substring(1, allNumbers.length()),smallAll, startFirst);
-		Set<Set<String>> secondSet = new HashSet<>();
+
+		Set<String> small = new HashSet<>();
+		if (smallAll.size() > 0) {
+			small.addAll(smallAll.get(smallAll.size() - 1));
+		}
+		small.add(allNumbers.substring(0, 1));
+		smallAllFin.add(small);
+		
+		System.out.println(smallAllFin);
+
+		getlotteryNumbers(allNumbers.substring(1, allNumbers.length()), smallAllFin);
+
 		if (allNumbers.length() > 1) {
-			for (Set<String> s : all) {
-				Set<String> small = new HashSet<>();
-				small.addAll(s);
-				small.add(allNumbers.substring(0, 2));
-				secondSet.add(small);
+			
+			List<Set<String>> smallAllFin2 = new ArrayList<>();
+
+
+			for (Set<String> s : smallAll) {
+				Set<String> delta = new HashSet<>();
+				delta.addAll(s);
+				smallAllFin2.add(delta);
 			}
-			getlotteryNumbers(allNumbers.substring(2, allNumbers.length()),smallAll, secondSet);
+
+			Set<String> small2 = new HashSet<>();
+			if (smallAll.size() > 0) {
+				small2.addAll(smallAll.get(smallAll.size() - 1));
+			}
+			small2.add(allNumbers.substring(0, 2));
+			smallAllFin2.add(small2);
+			
+			System.out.println(smallAllFin2);
+			getlotteryNumbers(allNumbers.substring(2, allNumbers.length()), smallAllFin2);
 		}
 	}
 }
